@@ -1,0 +1,14 @@
+/* 設計部監督總覽｜群組對照表、案件類型徽章（2026-10-21） */
+.pill.ctype{background:var(--orange-bg);color:var(--orange-ink)}
+.gm-tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 12px}
+.gm-tools .inp{flex:1 1 260px;max-width:420px}
+.gm-tbl{min-width:980px}
+.gm-tbl td{vertical-align:top}
+.gm-tbl .gm-folder{font-weight:800}
+.gm-tbl .gm-grp{display:block;line-height:1.5;overflow-wrap:anywhere}
+.gm-tbl .gm-grp + .gm-grp{margin-top:2px}
+.gm-tbl .gm-sub{display:block;font-size:12px;color:var(--ink-2);overflow-wrap:anywhere}
+.gm-tbl .pill{margin:0 4px 4px 0}
+.gm-sec{margin-top:26px}
+.gm-note{font-size:12.5px;color:var(--ink-2);margin:6px 0 10px}
+.type-sum th,.type-sum td{white-space:nowrap}

@@ -1,0 +1,94 @@
+/* 設計部監督總覽｜設計師切換（頂列）、儀表板款項總覽、業績模組（2026-10-20）
+   載入在 oversight.css 之後。顏色一律走既有變數；圖表系列色三套（淺色／系統深色／手動深色）都對過對比。 */
+
+/* ---------- 圖表系列色：沈郁雯＝藍、呂鴻墀＝橘、其他＝灰（顏色之外圖例與提示文字都寫出名字，不靠顏色單獨傳達） ---------- */
+:root{--ser-a:#2f6fd6;--ser-b:#e8710a;--ser-c:#8a8a8a;--ser-d:#2e9e6b}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--ser-a:#6ea3ff;--ser-b:#ffa24d;--ser-c:#a0a0a0;--ser-d:#5fd3a0}}
+:root[data-theme="dark"]{--ser-a:#6ea3ff;--ser-b:#ffa24d;--ser-c:#a0a0a0;--ser-d:#5fd3a0}
+
+/* ---------- 頂列：設計師切換 ---------- */
+.top{flex-wrap:wrap}
+.whobar{display:flex;gap:6px;align-items:center;flex-wrap:nowrap;order:3;flex-basis:100%;overflow-x:auto;padding:2px 0 0;-webkit-overflow-scrolling:touch}
+.dsgchip{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;flex-shrink:0}
+.dsgchip small{font-size:11px;font-weight:800;padding:0 6px;border-radius:999px;background:var(--soft-2);color:var(--ink-2);min-width:18px;text-align:center}
+.dsgchip[aria-pressed="true"] small{background:#ffffff33;color:inherit}
+@media (min-width:1024px){
+  .whobar{order:0;flex-basis:auto;flex:1;justify-content:center;overflow:visible}
+}
+
+/* ---------- 儀表板：款項總覽 ---------- */
+.mo-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;align-items:start}
+@media (min-width:1180px){.mo-grid{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr)}}
+.mo-kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (min-width:640px){.mo-kpis{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.mo-kpi{background:var(--panel);border-radius:var(--radius);padding:14px 16px;display:flex;flex-direction:column;gap:3px;min-width:0}
+.mo-kpi .lab{font-size:13px;font-weight:700;color:var(--ink-2)}
+.mo-kpi .num{font-size:24px;font-weight:900;line-height:1.15;letter-spacing:-.01em;overflow-wrap:anywhere}
+.mo-kpi .num small{font-size:12px;font-weight:800;margin-right:2px}
+.mo-kpi .sub{font-size:12px;color:var(--ink-2)}
+.mo-kpi.red .num{color:var(--red-ink)}
+.mo-cmp table{min-width:0}
+.mo-cmp th,.mo-cmp td{padding:9px 12px}
+.mo-cmp tbody tr{cursor:default}
+.mo-cmp th[scope="row"]{font-weight:700;color:var(--ink-2);white-space:nowrap}
+.mo-cmp th button{font-weight:800;color:var(--ink);text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--line-2)}
+.mo-cmp th.cur,.mo-cmp td.cur{background:var(--accent-soft,var(--soft))}
+.mo-cmp .bad{color:var(--red-ink)}
+
+/* ---------- 業績 ---------- */
+.perf-cards{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+@media (min-width:760px){.perf-cards{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}}
+.perf-card{background:var(--panel);border-radius:var(--radius);padding:16px 18px;box-shadow:inset 0 0 0 1px var(--line)}
+.perf-card.sel{box-shadow:inset 0 0 0 2px var(--accent)}
+.perf-card h3{font-size:16px;font-weight:900;margin-bottom:10px}
+.perf-card dl{margin:0;display:grid;gap:12px}
+.perf-card dl>div{display:grid;grid-template-columns:minmax(0,1fr);gap:1px}
+.perf-card dt{font-size:12px;font-weight:700;color:var(--ink-2)}
+.perf-card dd{margin:0;font-size:24px;font-weight:900;line-height:1.15;overflow-wrap:anywhere}
+.perf-card dd small{font-size:12px;font-weight:800;margin-right:2px}
+.perf-card dd.bad{color:var(--red-ink)}
+.perf-card dl small{font-size:12px;color:var(--ink-3);font-weight:600}
+.perf-card dd small{color:inherit}
+.perf-note{margin-top:14px}
+.perf-block{margin-top:32px}
+
+/* 每月實收長條圖：HTML／CSS 畫，字體不會跟著縮小；刻度由程式算成好讀的整數（0～4 格） */
+.pchart{display:grid;grid-template-columns:52px minmax(0,1fr);gap:8px;height:250px;padding-top:22px}
+.pc-y{position:relative}
+.pc-y span{position:absolute;right:0;transform:translateY(50%);font-size:11px;color:var(--ink-3);font-variant-numeric:tabular-nums;white-space:nowrap}
+.pc-plot{position:relative;margin-bottom:22px}
+.pc-grid{position:absolute;left:0;right:0;height:0;border-top:1px solid var(--line)}
+.pc-bars{position:absolute;inset:0;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:4px}
+@media (min-width:640px){.pc-bars{gap:10px}}
+.pc-col{position:relative;height:100%}
+.pc-stack{position:absolute;left:12%;right:12%;bottom:0;display:flex;flex-direction:column-reverse;border-radius:3px 3px 0 0;overflow:hidden}
+.pc-stack i{display:block;min-height:1px}
+.pc-val{position:absolute;left:0;right:0;text-align:center;font-size:10.5px;font-weight:800;color:var(--ink-2);font-variant-numeric:tabular-nums;white-space:nowrap}
+.pc-mon{position:absolute;left:0;right:0;bottom:-20px;text-align:center;font-size:11px;color:var(--ink-3)}
+@media (max-width:639px){
+  .pchart{grid-template-columns:44px minmax(0,1fr);padding-top:48px;height:276px}
+  .pc-val{writing-mode:vertical-rl;transform:rotate(180deg);left:50%;right:auto;margin-left:-6px;text-align:left}
+  .pc-mon{font-size:10px}
+}
+.s-a{background:var(--ser-a)} .s-b{background:var(--ser-b)} .s-c{background:var(--ser-c)} .s-d{background:var(--ser-d)}
+.pc-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--ink-2);margin-top:8px;align-items:center}
+.pc-legend .sw{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+
+/* 案件明細 */
+.perf-tbl{min-width:980px}
+.perf-tbl tbody tr{cursor:default}
+.perf-tbl tbody tr.off td{color:var(--ink-3)}
+.perf-tbl tfoot th,.perf-tbl tfoot td{border-top:2px solid var(--line-2);border-bottom:0;font-size:13px;background:var(--soft)}
+.perf-tbl tfoot th{white-space:normal;font-weight:700;color:var(--ink-2)}
+.perf-tbl td.name{white-space:normal;min-width:150px}
+
+/* 人工修正 */
+.perf-tbl td .linkish{min-height:0;font-size:12px}
+.settled-line{color:var(--green-ink)!important;font-weight:700!important}
+.dq-item .linkish{font-size:12px;min-height:0;margin-left:2px}
+/* 資料品質 */
+.perf-dq{margin-top:32px}
+.dq-item{padding:10px 0;border-top:1px solid var(--line)}
+.dq-item b{font-size:13px;font-weight:800}
+.dq-item small{display:block;font-size:12px;color:var(--ink-3);margin-top:1px}
+.dq-item p{font-size:12.5px;color:var(--ink-2);margin-top:4px;overflow-wrap:anywhere;line-height:1.6}

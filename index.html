@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>示範｜群組對話待辦</title>
+<script src="data.js"></script>
+<script src="shim.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<script>try{var t=localStorage.getItem("oversight.theme");if(t==="dark")document.documentElement.dataset.theme="dark"}catch(e){}</script>
+<link rel="stylesheet" href="oversight.css">
+<link rel="stylesheet" href="oversight-perf.css">
+<link rel="stylesheet" href="oversight-docs.css">
+<link rel="stylesheet" href="oversight-ux.css">
+<link rel="stylesheet" href="oversight-groupmap.css">
+<link rel="stylesheet" href="oversight-guide.css">
+<link rel="stylesheet" href="oversight-property.css">
+<link rel="stylesheet" href="oversight-prospects.css">
+
+</head>
+<body>
+<!-- 登入畫面三態：未登入／不在名單／出錯（照 Google登入_標準接法） -->
+<div class="gate" id="gate">
+  <div class="card">
+    <h1 id="gateTitle">設計部案件看板</h1>
+    <p id="gateMsg">網站僅供窩的家同仁使用，請用公司登記的 Google 帳號登入。</p>
+    <div id="gsiBtn" style="display:flex;justify-content:center"></div>
+    <button class="out" id="gateOut" type="button" hidden>登出，換帳號再試</button>
+  </div>
+</div>
+
+<div class="app" id="app" hidden>
+  <aside class="side" id="side" aria-label="側欄">
+    <div class="brand">
+      <span class="logo" aria-hidden="true">窩</span>
+      <div><b>設計部案件看板</b><small>窩的家</small></div>
+    </div>
+    <nav class="nav" id="nav" aria-label="主要模組"></nav>
+    <div class="side-foot">
+      <p id="sideStamp"></p>
+      <p id="viewer"></p>
+      <p>資料來源：LINE 群組相簿＋Ragic</p>
+      <p><button class="linkish" id="signOutBtn" type="button">登出</button></p>
+    </div>
+  </aside>
+  <button class="nav-back" id="navBack" type="button" aria-label="關閉選單"></button>
+
+  <div class="col">
+    <header class="top">
+      <button class="menu-btn" id="menuBtn" type="button" aria-label="開啟選單" aria-controls="side" aria-expanded="false"><i aria-hidden="true"></i></button>
+      <div class="top-title" id="pageTitle">總覽</div>
+      <div class="top-right">
+        <span class="stamp tnum" id="topStamp"></span>
+        <button class="btn quiet" id="refreshBtn" type="button">重新整理</button>
+        <button class="btn quiet" id="themeBtn" type="button">外觀：淺色</button>
+      </div>
+    </header>
+
+    <main id="main"><div class="loading">載入中…</div></main>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="照片">
+  <div class="lb-stage" id="lbStage"></div>
+  <div class="lb-cap" id="lbCap"></div>
+  <div class="lb-dl" id="lbDl"></div>
+  <div class="lb-nav">
+    <button class="btn" type="button" id="lbPrev">上一張</button>
+    <button class="btn" type="button" id="lbClose">關閉</button>
+    <button class="btn" type="button" id="lbNext">下一張</button>
+  </div>
+</div>
+
+<div class="sheet-back" id="sheetBack"></div>
+<aside class="sheet" id="sheet" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+  <div class="sheet-head"><div><p class="kicker" id="sheetKicker"></p><h2 id="sheetTitle"></h2></div><button class="btn quiet" type="button" id="sheetX">關閉</button></div>
+  <div class="sheet-body" id="sheetBody"></div>
+  <div class="sheet-foot"><p class="sync" id="sheetSync"></p><div class="sheet-btns"><button class="btn" type="button" id="sheetCancel">取消</button><button class="btn primary" type="button" id="sheetSave">儲存</button></div></div>
+</aside>
+
+<script src="oversight.js" defer></script>
+<script src="oversight-views.js" defer></script>
+<script src="oversight-weekly.js" defer></script>
+<script src="oversight-pay.js" defer></script>
+<script src="oversight-perf.js" defer></script>
+<script src="oversight-edit.js" defer></script>
+<script src="oversight-docs.js" defer></script>
+<script src="oversight-dash.js" defer></script>
+<script src="oversight-prospects.js" defer></script>
+<script src="oversight-gap.js" defer></script>
+<script src="oversight-groupmap.js" defer></script>
+<script src="oversight-actions.js" defer></script>
+<script src="oversight-guide-data.js" defer></script>
+<script src="oversight-guide.js" defer></script>
+<script src="bug-report.js" defer></script>
+<div id="demoBar" style="position:fixed;left:0;right:0;bottom:0;z-index:9999;background:#fff4d6;color:#5a4300;padding:8px 14px calc(8px + env(safe-area-inset-bottom));font-size:13px;line-height:1.5;border-top:1px solid #e8d49a;box-shadow:0 -2px 8px rgba(0,0,0,.08)">示範頁：案件、人名、對話都是假的。請看「待辦事項」裡標「對話」的那幾件，和案件頁的「群組交代」。按鈕可以按，重新整理就回到原樣。</div>
+<style>body{padding-bottom:64px}</style>
+</body>
+</html>

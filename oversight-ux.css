@@ -1,0 +1,221 @@
+/* 設計部監督總覽｜易用性改版（2026-10-20）的新增樣式：首頁一案一列、備註、案件頁頂端動作、標記結案／登記收款面板、群組整理一次一個、檢視者首頁。
+   變數與既有元件沿用 oversight.css；照 Joan 點頭的改版示範頁，示範頁用到、正式版原本沒有的類別補在這裡。 */
+
+/* ---------- 共用小零件 ---------- */
+.hint{font-size:12px;color:var(--ink-2)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chips .chip{min-height:40px;padding:0 14px}
+.chip b{font-weight:700}
+.pill.accent{background:var(--accent-soft);color:var(--accent-ink)}
+.btn.sm{min-height:40px;padding:0 12px;font-size:13px}
+.btn.warn{border-color:var(--red);color:var(--red-ink)}
+.segc{display:inline-flex;background:var(--panel);border-radius:999px;padding:3px;gap:2px;max-width:100%}
+.segc button{min-height:40px;border:0;border-radius:999px;background:transparent;padding:0 12px;font-weight:600;font-size:13px;color:var(--ink-2);white-space:nowrap}
+.segc button[aria-pressed="true"]{background:var(--bg);color:var(--ink);outline:1px solid var(--line-2);outline-offset:-1px}
+.head-acts{display:flex;gap:8px;flex-wrap:wrap}
+.toast{display:flex;gap:10px;align-items:center;max-width:calc(100vw - 32px)}
+.toast-undo{border:0;background:transparent;color:var(--accent-soft);font-weight:800;text-decoration:underline;min-height:36px;padding:0 6px;cursor:pointer}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .toast-undo{color:#bfeee6}}
+:root[data-theme="light"] .toast-undo{color:#bfeee6}
+
+/* ---------- 首頁：標題列三個數字、手機上金額佔滿一整列 ---------- */
+.titlerow .kpis.kpis3{grid-template-columns:repeat(2,minmax(0,1fr))}
+.titlerow .kpis.kpis3 .kpi:first-child{grid-column:1/-1}
+@media (min-width:640px){.titlerow .kpis.kpis3{grid-template-columns:1.5fr 1fr 1fr}.titlerow .kpis.kpis3 .kpi:first-child{grid-column:auto}}
+.titlerow .kpi .num{overflow-wrap:anywhere}
+.titlerow .kpi .num small{font-size:14px;font-weight:600}
+.wkline span:nth-child(3):not(.go){color:var(--ink-2);font-size:13px}
+
+/* ---------- 首頁：要追的案子（一案一列） ---------- */
+.tasks-col .chips{margin-top:12px}
+.qlist{margin-top:12px}
+.qrow{background:var(--panel);border-radius:18px;margin-bottom:10px;overflow:hidden}
+.qhead{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;padding:14px 16px;align-items:center}
+@media (min-width:860px){.qhead{grid-template-columns:minmax(0,1fr) auto}}
+.qname{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.qname-btn{border:0;background:transparent;padding:0;font-size:16px;font-weight:700;text-align:left;color:var(--ink);cursor:pointer;min-height:28px}
+.qname-btn:hover{text-decoration:underline;text-underline-offset:3px}
+.qissues{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.qacts{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.sev{width:8px;height:8px;border-radius:50%;display:inline-block;flex-shrink:0;margin-right:2px;background:var(--amber-line)}
+.sev.red{background:var(--red)}
+.qmore{border-top:1px solid var(--line);padding:6px 16px 12px}
+.qitem{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.qitem:last-child{border-bottom:0}
+.qitem p{font-size:13px;color:var(--ink-2);flex:1 1 260px;min-width:0;overflow-wrap:anywhere}
+.qitem p b{color:var(--ink)}
+.qi-acts{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.gapcta{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;background:var(--accent-soft);color:var(--accent-ink);border-radius:18px;padding:14px 16px;margin-top:16px}
+.gapcta b{font-size:15px}
+.gapcta .hint{color:inherit}
+
+/* ---------- 備註：首頁一列、案件頁頂端、案件列表共用 ---------- */
+.qnote{border-top:1px solid var(--line);padding:0 16px}
+.nt{min-width:0}
+.nt-latest{display:flex;align-items:center;gap:0 10px;flex-wrap:wrap;min-height:44px}
+.nt-body{flex:1 1 200px;min-width:0;display:flex;gap:8px;align-items:baseline;font-size:13px;padding:6px 0}
+.nt-meta{flex-shrink:0;font-size:12px;color:var(--ink-2);font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.nt-text{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nt-tools{display:flex;gap:2px 8px;align-items:center;margin-left:auto}
+.nt-tools .linkish{font-size:13px}
+@media (max-width:599px){
+  .nt-latest{padding-top:4px}
+  .nt-body{flex-basis:100%;flex-direction:column;gap:0;padding:6px 0 0}
+  .nt-body .nt-text{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow-wrap:anywhere}
+}
+.nt-add{min-height:44px;border:0;background:transparent;padding:0;color:var(--ink-3);font-weight:600;font-size:13px;display:inline-flex;align-items:center;gap:6px;cursor:pointer}
+.nt-add:hover{color:var(--accent-ink)}
+.nt-add i{font-style:normal;width:18px;height:18px;border-radius:50%;border:1px dashed var(--line-2);display:inline-flex;align-items:center;justify-content:center;font-size:12px;line-height:1}
+.nt-list{padding:4px 0 6px}
+.nt-item{padding:8px 0;border-bottom:1px solid var(--line);font-size:13px}
+.nt-item:last-child{border-bottom:0}
+.nt-item p{white-space:pre-wrap;overflow-wrap:anywhere;margin-top:2px}
+.nt-edit{padding:10px 0 12px}
+.nt-edit label{display:block;font-size:13px;font-weight:700;margin-bottom:6px}
+.nt-edit textarea.inp{min-height:88px;resize:vertical}
+.nt-btns{display:flex;gap:8px;justify-content:flex-end;margin-top:8px}
+.nt-one{display:flex;gap:8px;align-items:baseline;font-size:12px;margin-top:4px;min-width:0}
+.nt-one .nt-text{color:var(--ink)}
+.hero-acts .nt{margin-top:12px;border-top:1px solid var(--line)}
+.err{margin-top:6px}
+
+/* ---------- 案件頁：頂端金額與常用動作、黏住的小列 ---------- */
+.hero-acts{background:var(--panel);border-radius:var(--radius);padding:16px 18px;margin-top:14px}
+.money-line{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (min-width:760px){.money-line{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.ml{background:var(--bg);border-radius:14px;padding:10px 12px;min-width:0}
+.ml span{display:block;font-size:12px;color:var(--ink-2);font-weight:700}
+.ml b{display:block;font-size:20px;font-weight:400;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.ml.bad b{color:var(--red-ink)}
+.actbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.actbar .btn{min-height:44px}
+.sticky-bar{position:sticky;top:var(--topbar-h);z-index:27;background:var(--bg);border-bottom:1px solid var(--line);margin:0 -16px;padding:8px 16px;display:none;align-items:center;gap:8px;flex-wrap:wrap}
+.sticky-bar.on{display:flex}
+.sticky-bar b{font-weight:700;margin-right:auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
+@media (min-width:1024px){.sticky-bar{margin:0 -28px;padding:8px 28px}}
+.subnav{top:calc(var(--topbar-h) + var(--sbh, 0px) + env(safe-area-inset-top,0px))}
+.csec{scroll-margin-top:calc(var(--topbar-h) + var(--sbh, 0px) + 64px + env(safe-area-inset-top,0px))}
+.mem-help{margin-top:8px}
+
+/* ---------- 款項：合約各期／追加款兩組 ---------- */
+.pay-grp{margin-top:6px;padding-top:10px;justify-content:space-between}
+.pay-grp:first-child{margin-top:0;padding-top:4px}
+.pay-empty{padding:6px 0 12px}
+
+/* ---------- 面板：標記結案核對、登記收款預覽、進階摺疊 ---------- */
+.check{display:flex;gap:10px;align-items:flex-start;padding:8px 0;font-size:14px}
+.check i{width:20px;height:20px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:12px;font-weight:800;margin-top:1px}
+.check i.ok{background:var(--green-bg);color:var(--green-ink)}
+.check i.no{background:var(--amber-bg);color:var(--amber)}
+.alloc{background:var(--panel);border-radius:14px;padding:10px 12px;margin-top:4px}
+.alloc p{font-size:13px;padding:4px 0;display:flex;justify-content:space-between;gap:8px}
+.alloc p b{font-variant-numeric:tabular-nums;text-align:right}
+.alloc .t{font-weight:700;color:var(--ink-2);font-size:12px;display:block}
+.alloc .over{color:var(--amber)}
+.adv{margin-top:14px;border-top:1px solid var(--line);padding-top:6px}
+.adv summary{min-height:44px;display:flex;align-items:center;cursor:pointer;font-weight:700;font-size:13px;color:var(--ink-2)}
+.sheet-body .opts .opt input:disabled + span{opacity:.55}
+
+/* ---------- 群組整理：一次一個 ---------- */
+.gap-top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-end}
+.gprog{height:10px;border-radius:5px;background:var(--todo);overflow:hidden;margin-top:10px}
+.gprog i{display:block;height:100%;background:var(--accent)}
+.tcard{background:var(--panel);border-radius:var(--radius);padding:20px;margin-top:16px}
+.tcard h3{font-size:20px;font-weight:700;overflow-wrap:anywhere}
+.facts2{display:flex;gap:6px 16px;flex-wrap:wrap;font-size:13px;color:var(--ink-2);margin-top:6px}
+.guess{background:var(--accent-soft);color:var(--accent-ink);border-radius:14px;padding:12px 14px;margin-top:14px;display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+.guess .hint{color:inherit}
+.guess.soft{background:var(--bg)}
+.guess.soft,.guess.soft .hint{color:var(--ink-2)}
+.choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:16px}
+@media (min-width:900px){.choices{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.choice{border:1px solid var(--line);background:var(--bg);border-radius:16px;min-height:76px;padding:10px 12px;text-align:left;display:flex;flex-direction:column;gap:2px}
+.choice b{font-size:15px}
+.choice small{font-size:12px;color:var(--ink-2)}
+.choice:hover{border-color:var(--accent)}
+.choice kbd{font-family:inherit;font-size:11px;color:var(--ink-3)}
+@media (max-width:899px){.choice kbd{display:none}}
+.tnav{display:flex;justify-content:space-between;gap:8px;margin-top:14px;flex-wrap:wrap}
+.glist{background:var(--panel);border-radius:var(--radius);padding:4px 16px;margin-top:16px}
+.grow2{display:grid;grid-template-columns:44px minmax(0,1fr);gap:8px;padding:10px 0;border-bottom:1px solid var(--line);align-items:center;cursor:pointer}
+.grow2:last-child{border-bottom:0}
+.grow2 input{width:22px;height:22px;margin:0 auto;accent-color:var(--accent)}
+.grow2 b{font-weight:700;overflow-wrap:anywhere}
+.grow2 p{font-size:12px;color:var(--ink-2)}
+.bulk{position:sticky;bottom:calc(64px + env(safe-area-inset-bottom,0px));z-index:25;display:none;background:var(--ink);color:var(--bg);border-radius:18px;padding:10px 14px;margin-top:12px;gap:8px;align-items:center;flex-wrap:wrap}
+.bulk.on{display:flex}
+.bulk .btn{background:var(--bg);color:var(--ink);border-color:transparent}
+@media (min-width:1024px){.bulk{bottom:16px}}
+.gap-more{margin-top:28px}
+.gap-more .fold .fl{padding:0 16px 12px}
+.gap-more .fold summary{flex-wrap:wrap}
+
+/* ---------- 檢視者首頁 ---------- */
+.vcase{background:var(--panel);border-radius:var(--radius);padding:16px;margin-bottom:12px;cursor:pointer}
+.vcase:hover{background:var(--soft)}
+.sres{background:var(--panel);border-radius:16px;margin-top:8px;padding:4px 14px}
+.sres .r{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.sres .r:last-child{border-bottom:0}
+.blk-title .count{font-family:var(--font-ui)}
+
+/* ---------- 2026-11-02 視覺減噪（芳芳反映「看不懂、資訊同時攻擊」；版面與功能不動，只調層級） ----------
+   原則：紅色只留給真正要處理的事；說明是說明、按鈕是按鈕，形狀分得出來；同類的東西放進同一個框，不要一案一個泡泡。 */
+:root{--radius:14px;--radius-s:10px}
+/* 1. 切換鈕收成一組（設計師、我的案子／全部、篩選）：沒選的只剩字，選中的才有底色，三排不再搶眼 */
+.whobar .chip,.toolbar[aria-label="案件範圍"] .chip,.chips .chip{border-color:transparent;background:transparent}
+.whobar .chip:hover,.toolbar[aria-label="案件範圍"] .chip:hover,.chips .chip:hover{background:var(--soft)}
+.whobar .chip[aria-pressed="true"],.toolbar[aria-label="案件範圍"] .chip[aria-pressed="true"],.chips .chip[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
+.toolbar[aria-label="案件範圍"],.chips{display:inline-flex;flex-wrap:wrap;gap:2px;background:var(--panel);border-radius:22px;padding:3px}
+.chips .chip{min-height:36px}
+/* 2. 狀態標籤改方角、細一點：一眼分得出「這是說明」和「這是可以按的按鈕」 */
+.pill{border-radius:5px;font-weight:600;height:24px;padding:0 8px;font-size:12.5px}
+/* 3. 要追的案子收進同一個框、一案一行：七個泡泡變成一張清單 */
+.qlist{background:var(--panel);border-radius:var(--radius);overflow:hidden}
+.qlist .qrow{background:transparent;border-radius:0;margin:0;border-bottom:1px solid var(--line)}
+.qlist .qrow:last-child{border-bottom:0}
+.qlist .qrow:hover{background:var(--soft)}
+/* 4. 每一列的主要按鈕改淺底：七顆深綠實心鈕會搶走紅點和狀態標籤 */
+.qacts .btn.primary{background:var(--accent-soft);color:var(--accent-ink);border-color:transparent}
+.qacts .btn.primary:hover{background:var(--accent);color:var(--on-accent)}
+/* 5. 沒有備註時「加備註」只是一行小字，不另隔一格 */
+.qrow .qnote:has(> .nt > .nt-add:only-child){border-top:0;padding:0 16px 4px}
+.qrow .qnote:has(> .nt > .nt-add:only-child) .nt-add{min-height:32px;font-weight:500}
+/* 6. 側欄的數字只有儀表板用紅色；其他頁的數字是「有幾個」，不是警報 */
+.nav button:not([data-go="dash"]) .count.warn{background:var(--soft-2);color:var(--ink-2)}
+/* 7. 操作說明降一階、區塊之間拉開：標題離下面的內容近、離上面的區塊遠 */
+.blk-sub{font-size:14px;line-height:1.6;color:var(--ink-3);max-width:62ch}
+.blk-title + .blk-sub{margin-top:4px}
+.dash-main{margin-top:40px}
+.sec,.lead.sec{margin-top:64px}
+.blk-title .count{transform:translateY(2px)}
+
+/* ---------- 2026-11-03 審查：同時在做的工項（小橘點）跟「做到這裡」（大橘點）在圖例分開；手機進度列寫出做到哪 ---------- */
+.legend .lg.doing{box-shadow:none}
+.legend .lg.doing.cur{width:14px;height:14px;box-shadow:0 0 0 3px var(--orange-bg)}
+.rt-now{margin:0 0 6px;font-size:13px;color:var(--ink-2)}
+.rt-now b{color:var(--orange-ink)}
+.load-fail p{margin:0 0 10px}
+.load-fail .fail-acts{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:16px}
+
+/* 追加單待簽名（2026-11-05）：沒簽名的追加款不算應收，另列琥珀色 */
+.money-legend .unsigned b,.mt-figs .unsigned b{color:var(--amber)}
+.ml small.unsigned{display:block;color:var(--amber);font-size:12px;font-weight:700;margin-top:2px}
+.pay-summary b.unsigned{color:var(--amber)}
+.perf-strip{margin:0 0 18px}.perf-strip .hint{margin:0;color:var(--ink-3,#888)}
+
+/* 2026-11-11 批次 1：電腦版頂列（資料更新／重新整理／外觀）原本是透明的，案件頁往下捲時案件列、內容會從它後面透出來疊字。改成跟頁面同色的實底。 */
+@media (min-width:1024px){.col > .top{background:var(--bg)}}
+/* 跳到某段（待辦「處理」、段落跳轉列）時，段落標題要完整露出：頂列＋黏住的案件列＋段落跳轉列的高度都讓出來 */
+.csec{scroll-margin-top:calc(var(--topbar-h) + var(--sbh-full, 52px) + var(--subnav-h, 64px) + 12px + env(safe-area-inset-top,0px))}
+
+/* 案件頁「群組裡交代的事」（對話待辦，2026-11-24） */
+.chat-list{list-style:none;margin:12px 0 0;padding:0;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.chat-item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 12px;align-items:start;padding:12px 14px;border-top:1px solid var(--line)}
+.chat-item:first-child{border-top:0}
+.chat-item.is-done .ci-what b{color:var(--ink-3);text-decoration:line-through}
+.ci-what{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin:0;font-size:14px}
+.ci-quote{margin:4px 0 0;font-size:13px;color:var(--ink-2);overflow-wrap:anywhere}
+.ci-who{margin-inline-end:4px;color:var(--ink-3)}
+.ci-done{margin:4px 0 0;font-size:12px;color:var(--ink-3);overflow-wrap:anywhere}
+.ci-acts{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+@media (max-width:640px){.chat-item{grid-template-columns:1fr}.ci-acts{flex-direction:row;align-items:center;justify-content:flex-start}}

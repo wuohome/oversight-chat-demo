@@ -1,0 +1,47 @@
+/* 設計部監督總覽｜使用說明頁（2026-10-21）：給不懂房地產、也不是工程師的同仁，字大一點、行距鬆一點，手機上表格改成一張張卡片 */
+.guide{max-width:880px}
+.guide .g-role{margin:0 0 16px}
+.g-toc{background:var(--panel);box-shadow:var(--shadow);border-radius:var(--radius);padding:14px 16px;margin:0 0 20px}
+.g-toc-h{font-size:14px;font-weight:900;margin:0 0 8px}
+.g-toc-h small{font-weight:600;color:var(--ink-2)}
+.g-toc-list{display:grid;grid-template-columns:minmax(0,1fr);gap:2px}
+@media (min-width:640px){.g-toc-list{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:16px}}
+.g-toc-btn{display:flex;gap:8px;align-items:baseline;text-align:left;border:0;background:transparent;padding:8px 6px;min-height:40px;font-size:14px;font-weight:700;color:var(--ink);border-radius:var(--radius-s)}
+.g-toc-btn:hover{background:var(--soft)}
+.g-no{display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;border-radius:12px;background:var(--soft-2);color:var(--ink-2);font-size:12px;font-weight:800;flex-shrink:0;margin-right:2px}
+.g-sec{background:var(--panel);box-shadow:var(--shadow);border-radius:var(--radius);padding:18px 18px 8px;margin:0 0 16px;scroll-margin-top:calc(var(--topbar-h, 56px) + 12px)}
+#guideTop{scroll-margin-top:calc(var(--topbar-h, 56px) + 12px)}
+.g-title{font-size:20px;font-weight:900;line-height:1.4;display:flex;gap:8px;align-items:center;margin:0 0 8px}
+.g-what{font-size:15px;line-height:1.8;background:var(--soft);border-radius:var(--radius-s);padding:10px 12px;margin:0 0 12px}
+.g-h{font-size:16px;font-weight:900;margin:18px 0 8px}
+.g-p,.g-sec .note{font-size:15px;line-height:1.8;margin:0 0 12px}
+.g-steps,.g-bul{margin:0 0 14px;padding-left:1.6em;font-size:15px;line-height:1.8}
+.g-steps li,.g-bul li{margin:0 0 8px;padding-left:2px;overflow-wrap:anywhere}
+.g-steps li::marker{font-weight:800;color:var(--ink-2)}
+.g-sec a{color:var(--ink);text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere}
+.g-sec .tablewrap{margin:0 0 14px}
+.g-tbl{min-width:0;width:100%}
+.g-tbl th,.g-tbl td{white-space:normal;vertical-align:top;font-size:14px;line-height:1.75;padding:10px 12px}
+.g-tbl thead th{background:var(--soft);font-size:12px}
+.g-tbl tbody th{font-size:14px;font-weight:800;color:var(--ink);width:9.5em;min-width:7em}
+.g-tbl tbody tr{cursor:default}
+.g-cases{background:var(--soft);border-radius:var(--radius-s);padding:12px 14px;margin:0 0 14px}
+.g-ch{font-size:13px;font-weight:900;color:var(--ink-2);margin:0 0 6px}
+.g-cases dt{font-size:15px;font-weight:800;line-height:1.6;margin:10px 0 2px}
+.g-cases dt:first-of-type{margin-top:0}
+.g-cases dd{margin:0;font-size:15px;line-height:1.8;color:var(--ink-2);overflow-wrap:anywhere}
+.g-back{text-align:right;margin:0 0 6px}
+@media (max-width:640px){
+  .g-sec{padding:14px 14px 6px}
+  .g-sec .tablewrap{background:transparent;box-shadow:none}
+  .g-tbl,.g-tbl tbody,.g-tbl tr,.g-tbl th,.g-tbl td{display:block;width:100%}
+  .g-tbl thead{display:none}
+  .g-tbl tbody tr{background:var(--soft);border-radius:var(--radius-s);padding:6px 12px 8px;margin:0 0 8px}
+  .g-tbl tbody th{width:auto;padding:6px 0 2px;border:0;font-size:15px}
+  .g-tbl td{padding:3px 0;border:0}
+  .g-tbl td::before{content:attr(data-l) "：";font-weight:800;color:var(--ink-2)}
+}
+.g-before{background:var(--amber-bg);border-radius:var(--radius-s);padding:12px 14px;margin:0 0 14px}
+.g-before .g-ch{color:var(--amber)}
+.g-before ul{margin:0;padding-left:1.4em;font-size:15px;line-height:1.8}
+.g-before li{margin:0 0 6px}

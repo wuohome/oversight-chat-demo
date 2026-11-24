@@ -1,0 +1,12 @@
+/* 設計部監督總覽｜LINE 收到的文件（報價單／合約／匯款證明）。載入在 oversight.css 之後，顏色一律走既有變數。 */
+.docs-sec{margin-top:28px}
+.doclist{display:grid;gap:10px;margin-top:10px}
+.doc{background:var(--panel);border-radius:var(--radius);padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.doc-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.doc-name{font-weight:800;text-align:left;overflow-wrap:anywhere;min-width:0}
+.doc-meta{font-size:13px;color:var(--ink-2);overflow-wrap:anywhere}
+.doc-sum{font-size:13px;color:var(--ink-2);overflow-wrap:anywhere}
+.doc .task-act{margin-top:4px}
+@media (min-width:1024px){.doclist{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.doc-match{color:var(--green-ink);font-weight:700}
+small.doc-match{display:block;margin-top:2px}
