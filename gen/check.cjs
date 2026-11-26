@@ -1,10 +1,14 @@
 // 背景無頭瀏覽器檢查示範頁：電腦版與手機版截圖、按鈕實按、不能有程式錯誤
 // 跑法：node gen/check.cjs <網址> <截圖資料夾>
-const { chromium } = require('/Users/9m/Projects/104-recruit/node_modules/playwright');
+// 有任何一項沒過（程式錯誤、該出現的字沒出現）就以失敗結束，不能只印出來
+let chromium;
+try { ({ chromium } = require('playwright')); } catch (e) { ({ chromium } = require('/Users/9m/Projects/104-recruit/node_modules/playwright')); }
 const [url, outDir] = process.argv.slice(2);
+if (!url || !outDir) { console.error('用法：node gen/check.cjs <網址> <截圖資料夾>'); process.exit(2); }
 (async () => {
   const browser = await chromium.launch({ headless: true });
   const errs = [];
+  const expect = (name, label, ok) => { if (!ok) errs.push(`${name} 沒過：${label}`); };
   for (const [name, vp] of [['desktop', { width: 1366, height: 900 }], ['mobile', { width: 390, height: 844 }]]) {
     const page = await browser.newPage({ viewport: vp, deviceScaleFactor: 2 });
     page.on('pageerror', (e) => errs.push(`${name} pageerror: ${e.message}`));
@@ -17,20 +21,27 @@ const [url, outDir] = process.argv.slice(2);
     await page.waitForTimeout(600);
     const todoText = await page.evaluate(() => document.querySelector('main, #app').innerText);
     console.log(name, 'todo has 對話:', /對話/.test(todoText), '看原話:', /看原話/.test(todoText), '過約定日:', /過約定日 6 天/.test(todoText));
+    expect(name, '待辦頁有「對話」', /對話/.test(todoText));
+    expect(name, '待辦頁有「看原話」', /看原話/.test(todoText));
+    expect(name, '待辦頁有「過約定日 6 天」', /過約定日 6 天/.test(todoText));
     await page.screenshot({ path: `${outDir}/${name}-todo.png`, fullPage: name === 'mobile' });
     // 按一個對話待辦的「做完了」，再看「已做完」那摺有沒有多一件
     const btn = page.locator('[data-tdone^="chat:"]:visible').first();
     await btn.click(); await page.waitForTimeout(600);
     const after = await page.evaluate(() => document.body.innerText);
     console.log(name, 'after done toast:', /已標做完了/.test(after), 'fold:', (after.match(/群組交代的事已做完 \d+ 件/) || [''])[0]);
+    expect(name, '按做完了有提示', /已標做完了/.test(after));
+    expect(name, '已做完摺疊有出現', /群組交代的事已做完 \d+ 件/.test(after));
     // 案件頁群組交代
     await page.evaluate(() => { location.hash = '#case-201-chat'; });
     await page.waitForTimeout(600);
     const sec = await page.$('#c-chat');
     console.log(name, 'case chat section:', !!sec);
+    expect(name, '案件頁有群組交代區塊', !!sec);
     if (sec) { await sec.scrollIntoViewIfNeeded(); await page.waitForTimeout(200); await sec.screenshot({ path: `${outDir}/${name}-case-chat.png` }); }
     await page.close();
   }
   await browser.close();
   console.log('errors:', errs.length ? errs.join('\n') : 'none');
+  if (errs.length) process.exit(1);
 })().catch((e) => { console.error('FAIL', e.message); process.exit(1); });
